@@ -1,0 +1,6 @@
+# 桌面窗口（浏览器模式可省略 pywebview / pythonnet）
+pywebview>=5.0
+pythonnet>=3.0.0; sys_platform == "win32"
+
+# NHC 飓风 shapefile 解析
+pyshp>=2.3

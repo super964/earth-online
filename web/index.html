@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Earth Online — 实况地球数字孪生</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div id="root">
+  <div class="scene-layer"><canvas id="globe"></canvas></div>
+
+  <div class="ui-layer">
+    <!-- 顶部 HUD -->
+    <div class="hud">
+      <div class="brand panel">
+        <h1>EARTH ONLINE</h1>
+        <div class="sub">实况地球 · 数字孪生服务器</div>
+      </div>
+      <div class="status-row">
+        <span class="chip panel"><i class="dot live" id="net-dot"></i><span id="net-label">连接中</span></span>
+        <span class="chip panel" id="utc-clock">--:--:-- UTC</span>
+        <span class="chip panel" id="event-total">事件 0</span>
+        <button class="btn" id="btn-reset">重置视角</button>
+        <button class="btn" id="btn-about">关于</button>
+      </div>
+    </div>
+
+    <!-- 左侧:图层 -->
+    <div class="mid left">
+      <div class="panel section">
+        <div class="panel-title">◈ 图层控制</div>
+        <div id="layer-list"></div>
+      </div>
+      <div class="panel section">
+        <div class="panel-title">◈ 搜索地点</div>
+        <input id="search-box" class="search" placeholder="城市 / 地名,如 Tokyo" autocomplete="off" />
+        <div id="search-result" class="search-result"></div>
+      </div>
+    </div>
+
+    <!-- 右侧:事件流 -->
+    <div class="mid right">
+      <div class="panel section grow">
+        <div class="panel-title">◈ 实时事件流 <span class="feed-filter" id="feed-filter">全部</span></div>
+        <div id="feed" class="feed"></div>
+      </div>
+      <div class="panel section detail" id="detail" hidden>
+        <div class="panel-title">◈ 事件详情 <button class="btn mini" id="detail-close">×</button></div>
+        <div id="detail-body"></div>
+      </div>
+    </div>
+
+    <!-- 底部 -->
+    <div class="footer-row">
+      <div class="chip panel" id="coords">-- , --</div>
+      <div class="chip panel" id="kp-chip">Kp --</div>
+      <div class="chip panel" id="iss-chip">ISS --</div>
+      <div class="chip panel" id="sun-chip">日照 --</div>
+      <div class="chip panel" id="clock-local">--:--:--</div>
+    </div>
+  </div>
+
+  <!-- 关于弹窗 -->
+  <div class="modal-mask" id="about-mask" hidden>
+    <div class="panel modal">
+      <div class="panel-title">◈ 关于 Earth Online <button class="btn mini" id="about-close">×</button></div>
+      <p>一个受 <b>earth-live.app</b> 启发的实况地球可视化桌面客户端:在 3D 地球上叠加真实世界的实时事件。</p>
+      <ul>
+        <li><b>地震</b> — USGS 全球 M2.5+ 一周速报</li>
+        <li><b>火山</b> — Smithsonian GVP 全新世火山名录(1214 座)</li>
+        <li><b>野火</b> — NASA EONET 开放火点事件</li>
+        <li><b>台风/飓风</b> — 日本气象厅台风路径 + NHC 五天预报锥</li>
+        <li><b>天气警报</b> — 美国 NWS 严重/极端警报多边形</li>
+        <li><b>极光</b> — NOAA 行星 Kp 指数驱动的极光卵形带</li>
+        <li><b>国际空间站</b> — wheretheiss.at 实时位置与轨迹</li>
+        <li><b>昼夜线</b> — 根据真实 UTC 时间计算的太阳直射点</li>
+      </ul>
+      <p class="dim">数据均来自各机构公开接口,刷新周期 15 秒 ~ 15 分钟。断网时自动回退到本地样本数据。<br/>
+      本项目为独立学习作品,与 earth-live.app 及上述数据机构无关联。</p>
+    </div>
+  </div>
+
+  <!-- 加载屏 -->
+  <div id="loader">
+    <div class="loader-inner">
+      <div class="loader-title">EARTH ONLINE</div>
+      <div class="loader-bar"><i id="loader-fill"></i></div>
+      <div class="loader-tip" id="loader-tip">正在连接地球数据…</div>
+    </div>
+  </div>
+</div>
+
+<script src="vendor/three.min.js"></script>
+<script src="globe.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
